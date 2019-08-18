@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Name=Astree
+Comment=Free open-source optical ray tracing and design software
+Type=Application
+Categories=Graphics;Engineering;Education;
+MimeType=application/x-astree;
+Exec=astree %f
+TryExec=astree
+Terminal=false
+StartupNotify=true
+Icon=astree
