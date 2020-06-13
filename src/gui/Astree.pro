@@ -1,5 +1,5 @@
 TEMPLATE = app
-QT += widgets
+QT  += core gui widgets
 DESTDIR= ../..
 
 CONFIG+=c++17
@@ -21,6 +21,7 @@ SOURCES += main.cpp \
     DockCommentary.cpp \
     DialogMediumManager.cpp \
     DialogScaleDevice.cpp \
+	DialogRevertDesign.cpp \
     DockImageQuality.cpp \
     DockOptimizer.cpp
 	
@@ -33,11 +34,13 @@ HEADERS += MainWindow.h \
     MyViewFrame.h \
     DialogMediumManager.h \
     DialogScaleDevice.h \
+	DialogRevertDesign.h \
     DockImageQuality.h \
     DockOptimizer.h \
     AstreeDefines.h
 
 FORMS += MainWindow.ui \
+    DialogRevertDesign.ui \
     DockLightProperties.ui \
     FrameSideView.ui \
     DockScatterPlot.ui \
@@ -67,6 +70,7 @@ SOURCES += \
     ../DeviceIoZmx.cpp \
     ../LightAutoFocus.cpp \
     ../DeviceScaling.cpp \
+    ../DeviceRevert.cpp \
     ../DeviceOptimizer.cpp \
     ../DeviceOptimizerAmoeba.cpp \
     ../DeviceOptimizerRandom.cpp \
@@ -91,6 +95,7 @@ HEADERS += \
     ../DeviceIoZmx.h \
     ../LightAutoFocus.h \
     ../DeviceScaling.h \
+    ../DeviceRevert.h \
     ../DeviceOptimizer.h \
     ../DeviceOptimizerAmoeba.h \
     ../DeviceOptimizerRandom.h \

@@ -1,5 +1,5 @@
-// this file is covered by the General Public License version 2 or later
-// please see GPL.html for more details and licensing issues
+// this file is covered by the  GNU LESSER GENERAL PUBLIC LICENSE Version 3 or later
+// please see LICENSE.txt for more details and licensing issues
 // copyright Etienne de Foras ( the author )  mailto: etienne.deforas@gmail.com
 
 #include "DockSurfacesData.h"
@@ -190,12 +190,12 @@ void DockSurfacesData::update_table()
         qcbType->addItem("image_infinite");
         qcbType->addItem("perfect_lens");
         qcbType->addItem("perfect_mirror");
-        qcbType->addItem("image");
         qcbType->addItem("glass...");
+
+		qcbType->insertSeparator(8);
+
         for(unsigned int iM=0;iM<vsMaterial.size();iM++) //TODO optimize
             qcbType->addItem(vsMaterial[iM].c_str());
-
-        qcbType->insertSeparator(9);
 
         string sType=_pOD->type(i);
         int iPosType=qcbType->findText(sType.c_str());

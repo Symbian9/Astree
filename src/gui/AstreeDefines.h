@@ -1,11 +1,11 @@
-// this file is covered by the General Public License version 2 or later
-// please see GPL.html for more details and licensing issues
+// this file is covered by the  GNU LESSER GENERAL PUBLIC LICENSE Version 3 or later
+// please see LICENSE.txt for more details and licensing issues
 // copyright Etienne de Foras ( the author )  mailto: etienne.deforas@gmail.com
 
 #ifndef AstreeDefines_
 #define AstreeDefines_
 
-#define ASTREE_VERSION "1.22"
+#define ASTREE_VERSION "1.23"
 
 #define SIDEVIEW_NB_POINTS_SURFACE 41
 #define SIDEVIEW_NB_POINTS_LIGHT 17
