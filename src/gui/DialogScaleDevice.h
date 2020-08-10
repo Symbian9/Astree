@@ -1,3 +1,7 @@
+// this file is covered by the  GNU LESSER GENERAL PUBLIC LICENSE Version 3 or later
+// please see LICENSE.txt for more details and licensing issues
+// copyright Etienne de Foras ( the author )  mailto: etienne.deforas@gmail.com
+
 #ifndef DIALOGSCALEDEVICE_H
 #define DIALOGSCALEDEVICE_H
 
@@ -20,8 +24,6 @@ public:
     bool get_scale_focal();
 
 private slots:
-    void on_pushButton_clicked();
-
     void on_pushButton_2_clicked();
 
     void on_rbFactor_clicked();
@@ -29,6 +31,8 @@ private slots:
     void on_rbPercentage_clicked();
 
     void on_rbSizeChange_clicked();
+
+    void on_b_clicked();
 
 private:
     Ui::DialogScaleDevice *ui;

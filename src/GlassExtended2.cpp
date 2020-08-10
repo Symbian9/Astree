@@ -1,5 +1,5 @@
-// this file is covered by the General Public License version 2 or later
-// please see GPL.html for more details and licensing issues
+// this file is covered by the  GNU LESSER GENERAL PUBLIC LICENSE Version 3 or later
+// please see LICENSE.txt for more details and licensing issues
 // copyright Etienne de Foras ( the author )  mailto: etienne.deforas@gmail.com
 
 #include "GlassExtended2.h"
@@ -69,5 +69,7 @@ void GlassExtended2::set_coefs(double dC0,double dC1,double dC2,double dC3,doubl
     _dC5=dC5;
     _dC6=dC6;
     _dC7=dC7;
+
+	compute_solid_color();
 }
 //////////////////////////////////////////////////////////////////////////////

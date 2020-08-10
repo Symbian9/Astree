@@ -28,7 +28,6 @@ install:
   - cp -r samples/others/* astre/usr/share/samples/others
   - cp -r samples/refractors/* astre/usr/share/samples/refractors
   - cp -r samples/telescopes/* astre/usr/share/samples/telescopes
-  - cp -r samples/zmx/* astre/usr/share/samples/zmx
   - mkdir -p astree/usr/glass
   - cp -r glass/* astree/usr/glass
   
@@ -47,9 +46,6 @@ script:
 after_success:
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
   - bash upload.sh Astree*.AppImage*
-  - zip -v Astree-nightly.zip Astree*.AppImage*
-  - curl --upload-file Astree-nightly.zip https://transfer.sh/Astree-nightly.zip
-  - echo ""
 
 branches:
   except:

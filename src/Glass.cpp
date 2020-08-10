@@ -1,5 +1,5 @@
-// this file is covered by the General Public License version 2 or later
-// please see GPL.html for more details and licensing issues
+// this file is covered by the  GNU LESSER GENERAL PUBLIC LICENSE Version 3 or later
+// please see LICENSE.txt for more details and licensing issues
 // copyright Etienne de Foras ( the author )  mailto: etienne.deforas@gmail.com
 
 #include "Glass.h"
@@ -108,5 +108,33 @@ void Glass::compute_NeVe(double &Ne, double& Ve)
         Ve=(Ne-1.)/(Nfp-Ncp);
     else
         Ve=-1.; //not applicable
+}
+//////////////////////////////////////////////////////////////////////////////
+void Glass::compute_solid_color()
+{
+	double Nd, Vd;
+	double t;
+	compute_NdVd(Nd, Vd);
+
+	// crown color
+	double dRed90=150;
+	double dGreen90=255;
+	double dBlue90=255;
+
+	//flint color
+	double dRed20=30;
+	double dGreen20=150;
+	double dBlue20=255;
+
+	//interpolation crown-flint
+	t = (90.-Vd)/(90.-20.);
+	if (t > 1.)
+		t=1.;
+	if (t < 0.)
+		t=0.;
+	double red = dRed90 * t + (1. - t)*dRed20;
+	double green = dGreen90 * t + (1. - t)*dGreen20;
+	double blue = dBlue90 * t + (1. - t)*dBlue20;
+	_iSolidColor = (int)(((int)red<<16)+ ((int)green << 8)+ ((int)blue));
 }
 //////////////////////////////////////////////////////////////////////////////

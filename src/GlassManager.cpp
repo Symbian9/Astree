@@ -1,5 +1,5 @@
-// this file is covered by the General Public License version 2 or later
-// please see GPL.html for more details and licensing issues
+// this file is covered by the  GNU LESSER GENERAL PUBLIC LICENSE Version 3 or later
+// please see LICENSE.txt for more details and licensing issues
 // copyright Etienne de Foras ( the author )  mailto: etienne.deforas@gmail.com
 
 #include "GlassManager.h"
@@ -10,15 +10,16 @@
 #include "MaterialUnknow.h"
 
 #include <cassert>
+#include <algorithm>
 
 GlassManager* GlassManager::_pGlassManager=0;
 
 //////////////////////////////////////////////////////////////////////////////
 GlassManager::GlassManager()
 {
-    _vGlass.push_back(new MaterialAir);
-    _vGlass.push_back(new MaterialVacuum);
-    _vGlass.push_back(new MaterialWater);
+	inject(new MaterialAir);
+	inject(new MaterialVacuum);
+	inject(new MaterialWater);
 }
 //////////////////////////////////////////////////////////////////////////////
 GlassManager::~GlassManager()
@@ -75,6 +76,13 @@ void GlassManager::list_available(vector<string>& vsAvailable)
         vsAvailable.push_back(_vGlass[i]->name());
 }
 //////////////////////////////////////////////////////////////////////////////
+void GlassManager::list_catalogs(vector<string>& vsCatalogs)
+{
+	vsCatalogs.clear();
+	for (unsigned int i = 0; i < _vCatalogs.size(); i++)
+		vsCatalogs.push_back(_vCatalogs[i]);
+}
+//////////////////////////////////////////////////////////////////////////////
 bool GlassManager::exist(const string& sGlass) const
 {
     for(unsigned int i=0;i<_vGlass.size();i++)
@@ -99,5 +107,10 @@ unsigned int GlassManager::solid_color(const string& sMaterial)
 void GlassManager::inject(Glass* pGlass) //take ownership of pGlass
 {
     _vGlass.push_back(pGlass);
+
+	//add maker in catalog if no existent
+	auto it = std::find(_vCatalogs.begin(), _vCatalogs.end(), pGlass->maker());
+	if (it == _vCatalogs.end())
+		_vCatalogs.push_back(pGlass->maker());
 }
 //////////////////////////////////////////////////////////////////////////////

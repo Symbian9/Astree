@@ -1,5 +1,5 @@
-// this file is covered by the General Public License version 2 or later
-// please see GPL.html for more details and licensing issues
+// this file is covered by the  GNU LESSER GENERAL PUBLIC LICENSE Version 3 or later
+// please see LICENSE.txt for more details and licensing issues
 // copyright Etienne de Foras ( the author )  mailto: etienne.deforas@gmail.com
 
 #include "DeviceOptimizerRandom.h"
@@ -62,7 +62,8 @@ OptimizerResult DeviceOptimizerRandom::optimize()
 
         paramBest=paramBestIter;
 
-        // scale around best solution , divide by 2 each dimension
+        // scale around best solution , divide by 2 each dimension test if box is too small then exit
+		bExit = true;
         for(unsigned int iP=0;iP<paramBest.size();iP++)
         {
             DeviceOptimizerParameter& dop=paramBest[iP];
@@ -72,10 +73,10 @@ OptimizerResult DeviceOptimizerRandom::optimize()
             dop.dMin=dCenter-dRadius;
             dop.dMax=dCenter+dRadius;
 
-            // TODO check domain exit
+            // check domain exit
+			if ((dop.dMax - dop.dMin) > dop.dResolution)
+				bExit= false;
         }
-
-        bExit=domain_under_resolution(paramBest);
     }
 
     if(dBestMerit<SPOT_SIZE_INFINITY/2)

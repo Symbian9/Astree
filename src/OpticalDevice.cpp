@@ -1,5 +1,5 @@
-// this file is covered by the General Public License version 2 or later
-// please see GPL.html for more details and licensing issues
+// this file is covered by the  GNU LESSER GENERAL PUBLIC LICENSE Version 3 or later
+// please see LICENSE.txt for more details and licensing issues
 // copyright Etienne de Foras ( the author )  mailto: etienne.deforas@gmail.com
 
 #include <cassert>
@@ -419,19 +419,28 @@ bool OpticalDevice::compute_surface_profile(int iSurface,double dX,double dY,dou
 void OpticalDevice::initialize_light(Light* pLight,double dTilt,int iGridX,int iGridY)
 {
     assert(pLight);
+	Surface* pSurf = 0;
 
-    if(_vSurfaces.empty())
+	// do not init on void surfaces
+	for (int i = 0; i <(int)_vSurfaces.size(); i++)
+	{
+		if (_vSurfaces[i].type() != "void")
+		{
+			pSurf = &_vSurfaces[i];
+			break;
+		}
+	}
+
+    if(pSurf==0)
         return;
-
-    Surface& pSurf=_vSurfaces[0];
 
     pLight->set_nb_photons(iGridX,iGridY);
     pLight->set_tilt(dTilt,0);
     pLight->set_colors(_sLightColors);
 
     double dDecal;
-    pSurf.compute_z(0,pSurf.diameter()/2.,dDecal);
-    pLight->set_geometry(pSurf.z()+dDecal,pSurf.diameter());
+    pSurf->compute_z(0,pSurf->diameter()/2.,dDecal);
+    pLight->set_geometry(pSurf->z()+dDecal,pSurf->diameter());
     pLight->get_photon(0); // to force light->init ) TODO
 }
 //////////////////////////////////////////////////////////////////////////////

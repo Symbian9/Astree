@@ -1,5 +1,5 @@
-// this file is covered by the General Public License version 2 or later
-// please see GPL.html for more details and licensing issues
+// this file is covered by the  GNU LESSER GENERAL PUBLIC LICENSE Version 3 or later
+// please see LICENSE.txt for more details and licensing issues
 // copyright Etienne de Foras ( the author )  mailto: etienne.deforas@gmail.com
 
 #include "GlassSellmeier.h"
@@ -53,5 +53,7 @@ void GlassSellmeier::set_coefs(double dB1,double dB2,double dB3,double dC1,doubl
     _dC1=dC1;
     _dC2=dC2;
     _dC3=dC3;
+	
+	compute_solid_color();
 }
 //////////////////////////////////////////////////////////////////////////////

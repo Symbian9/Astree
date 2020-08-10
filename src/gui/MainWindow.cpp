@@ -1,5 +1,5 @@
-// this file is covered by the General Public License version 2 or later
-// please see GPL.html for more details and licensing issues
+// this file is covered by the  GNU LESSER GENERAL PUBLIC LICENSE Version 3 or later
+// please see LICENSE.txt for more details and licensing issues
 // copyright Etienne de Foras ( the author )  mailto: etienne.deforas@gmail.com
 
 #include "FileUtil.h"
@@ -27,14 +27,19 @@
 #include "GlassManager.h"
 #include "DialogMediumManager.h"
 #include "DialogScaleDevice.h"
+#include "DialogRevertDesign.h"
 
 #include "GlassCatalogIo.h"
 
 #include "DeviceScaling.h"
+#include "DeviceRevert.h"
+
 //////////////////////////////////////////////////////////////////////////////
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindowClass)
 {
+	setCursor(Qt::WaitCursor);
+
     ui->setupUi(this);
     _pDevice=new OpticalDevice;
 	
@@ -77,6 +82,10 @@ MainWindow::MainWindow(QWidget *parent)
     //  tabifyDockWidget(_pDockScatterPlot,_pDockImageQuality);
 
     device_changed(0,NEW_OPTICAL_DEVICE,false);
+	setWindowIcon(QPixmap(":/Astree/Astree.ico"));
+	QTimer::singleShot(0, this, SLOT(showMaximized())); //showMaximized ugly fix as in:https://stackoverflow.com/questions/19817881/qt-fullscreen-on-startup
+
+	setCursor(Qt::ArrowCursor);
 }
 //////////////////////////////////////////////////////////////////////////////
 MainWindow::~MainWindow()
@@ -128,7 +137,7 @@ void MainWindow::on_actionQuit_triggered()
 void MainWindow::on_actionAbout_triggered()
 {
     QMessageBox mb;
-    mb.setText("Astree " ASTREE_VERSION " by etienne.deforas@gmail.com\nThanks to @probonopd and @app4soft for the Linux build");
+    mb.setText("Astree " ASTREE_VERSION " by etienne.deforas@gmail.com\nThanks to\n@probonopd and @app4soft for the Linux build\nDmitriy Seregin for the tests and suggestions\nNathan Zhagen for the glass catalogs");
     mb.setIconPixmap(QPixmap(":/Astree/Astree.ico"));
     mb.exec();
 }
@@ -390,10 +399,24 @@ std::string MainWindow::get_glass_path() const
 #ifdef __unix__ //linux
 
 	string sAppPath = QCoreApplication::applicationDirPath().toStdString();
-	string sGlassPath = sAppPath + "/../share/astree/glass/"; //not very clean but should work
+	string sGlassPath = sAppPath + "../share/astree/glass/"; //not very clean but should work
 	return sGlassPath;
 #endif
 
 	return "invalid glass path";
+}
+//////////////////////////////////////////////////////////////////////////////
+void MainWindow::on_actionRevert_design_triggered()
+{
+	DialogRevertDesign sd(_pDevice->nb_surface(), this);
+	if (sd.exec())
+	{
+		DeviceRevert dmc;
+
+		dmc.revert(_pDevice, sd.first_surface(), sd.last_surface());
+		_bMustSave = true;
+		device_changed(0, OPTICAL_DEVICE_CHANGED);
+		_pFrameSideView->fit_in_view();
+	}
 }
 //////////////////////////////////////////////////////////////////////////////

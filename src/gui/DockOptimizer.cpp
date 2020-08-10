@@ -1,3 +1,7 @@
+// this file is covered by the  GNU LESSER GENERAL PUBLIC LICENSE Version 3 or later
+// please see LICENSE.txt for more details and licensing issues
+// copyright Etienne de Foras ( the author )  mailto: etienne.deforas@gmail.com
+
 #include "DockOptimizer.h"
 #include "ui_DockOptimizer.h"
 
@@ -9,6 +13,7 @@
 
 #include "DeviceOptimizerRandom.h"
 #include "DeviceOptimizerAmoeba.h"
+#include "DeviceOptimizerHypercube.h"
 
 #include "MainWindow.h"
 
@@ -92,11 +97,15 @@ void DockOptimizer::optimize(bool bModeRefine)
     if(_pDevice->nb_surface()==0)
         return;
 
-    DeviceOptimizer* optim;
+    DeviceOptimizer* optim=nullptr;
     if(ui->cbMethod->currentIndex()==0)
         optim=new DeviceOptimizerAmoeba;
-    else
+
+    if(ui->cbMethod->currentIndex()==1)
         optim=new DeviceOptimizerRandom;
+
+    if(ui->cbMethod->currentIndex()==2)
+        optim=new DeviceOptimizerHypercube;
 
     optim->set_device(_pDevice);
 
@@ -386,6 +395,9 @@ void DockOptimizer::on_cbMethod_currentIndexChanged(int index)
 
     if(iCriteria==1)
         _pDevice->set_parameter("optimizer.method","MonteCarlo");
+
+    if(iCriteria==1)
+        _pDevice->set_parameter("optimizer.method","Hypercube");
 
     static_cast<MainWindow*>(parent())->device_changed(this,OPTIMIZER_CHANGED);
 }
